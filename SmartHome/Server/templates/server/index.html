@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<form action="{% url 'server:add_serial_connection' %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Add New Serial Connection"/>
+</form>
+{% if serial_list %}
+    <form action="{% url 'server:serial_connection' %}" method="post">
+        {% csrf_token %}
+        {% for serial in serial_list %}
+            <input type="radio" name="serial" id="serial{{ forloop.counter }}" value="{{ serial.name }}"/>
+            {% if serial.isConnected %}
+                <label style="color:darkgreen" for="serial{{ forloop.counter }}" color="red">{{ serial.name }}</label><br/>
+            {% else %}
+                <label style="color:red" for="serial{{ forloop.counter }}" color="red">{{ serial.name }}</label><br/>
+            {% endif %}
+        {% endfor %}
+        <input type="submit" value="Choose Your Serial Connection"/>
+    </form>
+{% else %}
+    <p>No serial are available.</p>
+{% endif %}
+</body>
+</html>

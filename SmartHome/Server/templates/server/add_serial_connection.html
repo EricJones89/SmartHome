@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+{% if serial_list %}
+    <form action="{% url 'server:serial_connection' %}" method="post">
+        {% csrf_token %}
+        {% for serial in serial_list %}
+            <input type="radio" name="serial" id="serial{{ forloop.counter }}" value="{{ serial }}"/>
+            <label for="serial{{ forloop.counter }}">{{ serial }}</label><br/>
+        {% endfor %}
+        <input type="text" name="serial_name" placeholder="Name your new serial connection"/><br>
+
+        <select name="type">
+            <option value="xBee">xBee</option>
+            <option value="generic">Generic Serial Connection</option>
+        </select>
+    <br/>
+    <br/>
+
+        <input type="submit" value="Create Your Serial Connection"/><br/>
+
+    </form>
+{% else %}
+    <p>No serial are available.</p>
+{% endif %}
+</body>
+</html>

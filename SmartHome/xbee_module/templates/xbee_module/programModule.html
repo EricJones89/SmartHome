@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Program Xbee Module</title>
+</head>
+<body>
+{% if module %}
+    <form action="{% url 'server:serial_connection' %}" method="post">
+        {% csrf_token %}
+        {% for serial in serial_list %}
+            <input type="radio" name="serial" id="serial{{ forloop.counter }}" value="{{ serial }}"/>
+            <label for="serial{{ forloop.counter }}">{{ serial }}</label><br/>
+        {% endfor %}
+        <input type="submit" value="Choose Your Serial Connection"/>
+    </form>
+{% else %}
+    <p>No serial are available.</p>
+{% endif %}
+</body>
+</html>
