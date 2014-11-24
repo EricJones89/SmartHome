@@ -10,7 +10,7 @@ class SerialConnections(models.Model):
     location_url = models.CharField(max_length=100)
 
     def __str__(self):
-        return ''.join(list(list_ports_posix.comports()))
+        return self.name
 
     @staticmethod
     def get_list_of_serial_connections():
