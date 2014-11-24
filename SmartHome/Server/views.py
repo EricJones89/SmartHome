@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from Server.models import SerialConnections
 from Server.SerialConnectionProvider import SerialConnectionProvider
 
@@ -13,6 +13,7 @@ def index(request):
     return render(request, "server/index.html", context)
 
 def serial_connection(request):
+    return HttpResponseRedirect('/xbee_module/program')
     connection = SerialConnectionProvider.SerialConnection(name = request.POST['serial_name'] , location_url = request.POST['serial'], type = request.POST['type'])
     connection.save()
     open = connection.start_connection()
