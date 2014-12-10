@@ -5,17 +5,16 @@
     <title>Program Xbee Module</title>
 </head>
 <body>
-{% if module %}
-    <form action="{% url 'server:serial_connection' %}" method="post">
+<label>"value from serial interface is"</label><br/>
+<label>{{ serial_output }} </label><br/>
+<form action={{ xbee_module.get_absolute_url }} method="post">
         {% csrf_token %}
-        {% for serial in serial_list %}
-            <input type="radio" name="serial" id="serial{{ forloop.counter }}" value="{{ serial }}"/>
-            <label for="serial{{ forloop.counter }}">{{ serial }}</label><br/>
-        {% endfor %}
-        <input type="submit" value="Choose Your Serial Connection"/>
+        <input type="text" name="serial_command" placeholder="Send a command to your serial interface"/><br>
+    <br/>
+    <br/>
+
+        <input type="submit" value="Send command"/><br/>
+
     </form>
-{% else %}
-    <p>No serial are available.</p>
-{% endif %}
 </body>
 </html>

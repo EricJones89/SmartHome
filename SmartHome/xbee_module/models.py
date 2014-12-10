@@ -8,3 +8,6 @@ class xbee_module(SerialConnections):
     networkAddress = models.TextField(max_length=4);
     serialNumber = models.TextField(max_length=16);
     pan_id = models.TextField(max_length=16);
+
+    def get_absolute_url(self):
+        return "/xbee_module/program/%i/" % self.id

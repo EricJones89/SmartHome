@@ -1,8 +1,9 @@
 from django.shortcuts import render
-
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import redirect
+from django.http import HttpResponse
 from Server.models import SerialConnections
 from Server.SerialConnectionProvider import SerialConnectionProvider
+from xbee_module.models import xbee_module
 
 
 def index(request):
@@ -13,7 +14,6 @@ def index(request):
     return render(request, "server/index.html", context)
 
 def serial_connection(request):
-    return HttpResponseRedirect('/xbee_module/program')
     connection = SerialConnectionProvider.SerialConnection(name = request.POST['serial_name'] , location_url = request.POST['serial'], type = request.POST['type'])
     connection.save()
     open = connection.start_connection()
@@ -25,3 +25,9 @@ def add_serial_connection(request):
     serial_list = SerialConnections.get_list_of_serial_connections()
     context = {'serial_list':serial_list}
     return render(request, "server/add_serial_connection.html", context)
+
+def program_serial_connection(request):
+    serialConnection = xbee_module.objects.get(pk=request.POST["serial"])
+    if isinstance(serialConnection, xbee_module):
+        return redirect(serialConnection)
+    return HttpResponse("no available page for this connection")

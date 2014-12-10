@@ -10,14 +10,14 @@
     <input type="submit" value="Add New Serial Connection"/>
 </form>
 {% if serial_list %}
-    <form action="{% url 'server:serial_connection' %}" method="post">
+    <form action="{% url 'server:program_serial_connection' %}" method="post">
         {% csrf_token %}
         {% for serial in serial_list %}
-            <input type="radio" name="serial" id="serial{{ forloop.counter }}" value="{{ serial.name }}"/>
+            <input type="radio" name="serial" id="serial{{ forloop.counter }}" value="{{ serial.id }}"/>
             {% if serial.isConnected %}
-                <label style="color:darkgreen" for="serial{{ forloop.counter }}" color="red">{{ serial.name }}</label><br/>
+                <label style="color:darkgreen" for="serial{{ forloop.counter }}">{{ serial.name }}</label><br/>
             {% else %}
-                <label style="color:red" for="serial{{ forloop.counter }}" color="red">{{ serial.name }}</label><br/>
+                <label style="color:red" for="serial{{ forloop.counter }}">{{ serial.name }}</label><br/>
             {% endif %}
         {% endfor %}
         <input type="submit" value="Choose This Serial Connection"/>
