@@ -6,14 +6,18 @@
 </head>
 <body>
 <label>"value from serial interface is"</label><br/>
-<label>{{ serial_output }} </label><br/>
+<label>{{ serial_output }} </label><br/><br/>
 <form action={{ xbee_module.get_absolute_url }} method="post">
         {% csrf_token %}
-        <input type="text" name="serial_command" placeholder="Send a command to your serial interface"/><br>
+    <label>"Destination high (4B)"</label>
+        <input type="text" name={{ xbee_module.HIGH_ADDRESS }} placeholder="Destination High"/><br>
+    <br/>
+    <label>"Destination low (4B)"</label>
+        <input type="text" name={{ xbee_module.LOW_ADDRESS }} placeholder="Destination Low"/><br>
     <br/>
     <br/>
 
-        <input type="submit" value="Send command"/><br/>
+        <input type="submit" value="Program"/><br/>
 
     </form>
 </body>

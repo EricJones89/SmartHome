@@ -8,10 +8,16 @@ def index(request):
 def program(request, xbee_module_id):
     xbee_module_instance = xbee_module.objects.get(pk=xbee_module_id)
 
-    if  'serial_command' in request.POST:
-        serial_command = request.POST['serial_command']
+    commands = {}
+    if xbee_module.HIGH_ADDRESS in request.POST:
+        commands[xbee_module.HIGH_ADDRESS] = request.POST[xbee_module.HIGH_ADDRESS]
+
+    if xbee_module.LOW_ADDRESS in request.POST:
+        commands[xbee_module.LOW_ADDRESS] = request.POST[xbee_module.LOW_ADDRESS]
+
+    xbee_module_instance.send_command(commands)
 
 
-    context = {'serial_output' : "none",
-               'xbee_module':xbee_module_instance}
+    context = {'serial_output': "none",
+               'xbee_module': xbee_module_instance}
     return render(request, "xbee_module/programModule.html", context)
